@@ -297,3 +297,14 @@ Some more wisdom:
  * in case of failure, JSON output should include *failed* key and explanation in *msg*
  * writing to *stderr* in the module makes it fail from Ansible's pow
  * to document your module, use *DOCUMENTATION* variable
+
+
+
+
+
+
+
+$ ansible/hacking/test-module -m yum-repo-manager.py  -c
+* including generated source, if any, saving to: /home/pok/.ansible_module_generated
+***********************************
+INVALID OUTPUT FROM ANSIBALLZ MODULE WRAPPER
