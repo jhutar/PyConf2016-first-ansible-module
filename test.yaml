@@ -1,0 +1,11 @@
+---
+- hosts: localhost
+  connection: local
+  tasks:
+    - timetest:
+      #with_items:
+      #  - a
+      #  - b
+      register: timetest_result
+    - debug: var=timetest_result
+...
