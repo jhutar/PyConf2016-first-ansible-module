@@ -1,5 +1,28 @@
 #!/usr/bin/env python
 
+DOCUMENTATION = '''
+---
+module: timetest
+short_description: Get or set time
+# ... snip ...
+'''
+
+EXAMPLES = '''
+- timetest:
+
+- timetest:
+    time: 2017-01-01 00:00:00
+'''
+
+RETURN = '''
+time:
+    description: Current time on remote syste,
+    returned: success or changed
+    type: string
+    sample: "2017-01-01 00:00:00"
+...
+'''
+
 # import some python modules that we'll use.  These are all
 # available in Python's core
 
