@@ -1,10 +1,40 @@
+     ________  ___    ___ ________  ________  ________
+    |\   __  \|\  \  /  /|\   ____\|\   __  \|\   ___  \
+    \ \  \|\  \ \  \/  / | \  \___|\ \  \|\  \ \  \\ \  \
+     \ \   ____\ \    / / \ \  \    \ \  \\\  \ \  \\ \  \
+      \ \  \___|\/  /  /   \ \  \____\ \  \\\  \ \  \\ \  \
+       \ \__\ __/  / /      \ \_______\ \_______\ \__\\ \__\
+        \|__||\___/ /        \|_______|\|_______|\|__| \|__|
+             \|___|/
+
+
+      _______  ________    _____  ________
+     /  ___  \|\   __  \  / __  \|\   ____\
+    /__/|_/  /\ \  \|\  \|\/_|\  \ \  \___|
+    |__|//  / /\ \  \\\  \|/ \ \  \ \  \____
+        /  /_/__\ \  \\\  \   \ \  \ \  ___  \
+       |\________\ \_______\   \ \__\ \_______\
+        \|_______|\|_______|    \|__|\|_______|
+
+
+
+     ________  ________  ________   ________
+    |\   __  \|\   __  \|\   ___  \|\   __  \
+    \ \  \|\ /\ \  \|\  \ \  \\ \  \ \  \|\  \
+     \ \   __  \ \   _  _\ \  \\ \  \ \  \\\  \
+      \ \  \|\  \ \  \\  \\ \  \\ \  \ \  \\\  \
+       \ \_______\ \__\\ _\\ \__\\ \__\ \_______\
+        \|_______|\|__|\|__|\|__| \|__|\|_______|
+
+~~~~
+
 Writing my first Ansible module
 ===============================
 
 Maybe you are using Ansible but realized you are using "shell" module where something nicer could be used? We will go through creating a simple "yum-repo-manager" module.
 
-PyConf2016 Brno
-Jan Hutař
+    PyConf2016 Brno
+    Jan Hutař
 
 ~~~~
 
@@ -186,6 +216,8 @@ Produces:
         "time": "2016-10-27 10:54:09.638336"
     }
 
+~~~~
+
 Ad-hoc command to run our module:
 ---------------------------------
 
@@ -196,6 +228,8 @@ Ad-hoc command to run our module:
         "changed": false, 
         "time": "2016-10-27 10:58:39.565884"
     }
+
+~~~~
 
 Run the module from playbook:
 -----------------------------
@@ -237,6 +271,8 @@ and just *localhost* in *hosts.ini*, run the playbook with:
     
     PLAY RECAP *********************************************************************
     localhost                  : ok=3    changed=0    unreachable=0    failed=0
+
+~~~~
 
 Running the module in a loop:
 -----------------------------
@@ -289,6 +325,8 @@ Module is actually executed twice now:
         }
     }
 
+~~~~
+
 Some more wisdom:
 =================
 
@@ -298,11 +336,36 @@ Some more wisdom:
  * writing to *stderr* in the module makes it fail from Ansible's pow
  * to document your module, use *DOCUMENTATION* variable
 
+~~~~
 
+Wanna git?
+==========
 
+.. code:: sh
 
+    git clone https://github.com/jhutar/PyConf2016-first-ansible-module.git
+    git checkout CHECK1   # timetest.py in original state from the docs
+    git checkout CHECK2   # rewrote it with AnsibleModule
+    git checkout CHECK3   # yum_repo_manager.py with empty template
+    git checkout master
 
+~~~~
 
+Writing yum_config_manager module?
+==================================
+
+This might be handy?
+
+.. code:: python
+
+    >>> import yum
+    >>> ayum = yum.YumBase()
+    >>> ayum.repos.listEnabled()
+    [<yum.yumRepo.YumRepository object at 0x7fc59ff37cd0>, <yum.yumRepo.YumRepository object at 0x7fc59ff44c10>, <yum.yumRepo.YumRepository object at 0x7fc59ff4d190>, <yum.yumRepo.YumRepository object at 0x7fc59ff37710>, <yum.yumRepo.YumRepository object at 0x7fc59fce8110>, <yum.yumRepo.YumRepository object at 0x7fc59fcf2250>, <yum.yumRepo.YumRepository object at 0x7fc59fce8dd0>, <yum.yumRepo.YumRepository object at 0x7fc59fcf24d0>, <yum.yumRepo.YumRepository object at 0x7fc59ff2a790>, <yum.yumRepo.YumRepository object at 0x7fc59fcad890>, <yum.yumRepo.YumRepository object at 0x7fc59fca4750>, <yum.yumRepo.YumRepository object at 0x7fc59fc510d0>, <yum.yumRepo.YumRepository object at 0x7fc59fcc8250>, <yum.yumRepo.YumRepository object at 0x7fc59fc51710>, <yum.yumRepo.YumRepository object at 0x7fc59fcd8bd0>]
+    >>> dir(ayum.repos)
+    ['__del__', '__doc__', '__init__', '__module__', '__str__', '_cache_enabled_repos', '_list_enabled_hasrun', '_setup', 'add', 'ayum', 'cache', 'callback', 'close', 'confirm_func', 'delete', 'disableRepo', 'doSetup', 'enableRepo', 'findRepos', 'getPackageSack', 'getRepo', 'gpg_import_func', 'gpgca_import_func', 'listEnabled', 'listGroupsEnabled', 'logger', 'pkgSack', 'populateSack', 'quick_enable_disable', 'repos', 'retrieveAllMD', 'setCache', 'setCacheDir', 'setFailureCallback', 'setInterruptCallback', 'setMirrorFailureCallback', 'setProgressBar', 'sort']
+
+~~~~
 
 $ ansible/hacking/test-module -m yum-repo-manager.py  -c
 * including generated source, if any, saving to: /home/pok/.ansible_module_generated
