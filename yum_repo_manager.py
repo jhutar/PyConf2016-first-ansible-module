@@ -37,11 +37,14 @@ def main():
     module = AnsibleModule(
         argument_spec = dict(
             disable = dict(),
-            enable = dict(),
+            enable = dict()
         ),
         supports_check_mode = True
     )
-    module.exit_json(changed=False, enabled=[], disabled=[])
+    import yum
+    ayum = yum.YumBase()
+    enabled = list(str(i) for i in ayum.repos.listEnabled() )
+    module.exit_json(changed=False, enabled=enabled, disabled=[])
 
 from ansible.module_utils.basic import AnsibleModule
 if __name__ == '__main__':
